@@ -1,9 +1,7 @@
 package audio;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import java.nio.charset.Charset;
@@ -27,6 +25,7 @@ public class AudioMaster {
 	private static long device;
 	private static ALCCapabilities alcCapabilities;
 	private static long context;
+	@SuppressWarnings("unused")
 	private static ALCapabilities alCapabilities;
 	
 	private static List<Integer> buffers = new ArrayList<Integer>();

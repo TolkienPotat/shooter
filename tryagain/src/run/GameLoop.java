@@ -4,15 +4,10 @@ import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 
-import java.util.Random;
-
 import dev.create.Initiate;
-import dev.draw.Renderer;
 import states.GameState;
 import states.LobbyState;
 import states.StateMachine;
-import things.Map;
-import things.Player;
 
 public class GameLoop {
 	

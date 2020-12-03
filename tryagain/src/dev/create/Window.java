@@ -41,7 +41,7 @@ public class Window {
 	public final int width;
 	public final int height;
 	
-	public static GLFWErrorCallback errorCallback = GLFWErrorCallback.createPrint(System.err);
+	public GLFWErrorCallback errorCallback = GLFWErrorCallback.createPrint(System.err);
 	
 	public long id;
 	

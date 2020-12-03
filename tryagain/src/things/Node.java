@@ -1,7 +1,5 @@
 package things;
 
-import java.awt.Point;
-
 public class Node {
 
 	int x, y;

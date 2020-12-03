@@ -122,7 +122,7 @@ public class Enemy extends Entity{
 		Node start = new Node(eX, eY);
 		Node current = start;
 		
-		Node[] edge = new Node[62];	
+//		Node[] edge = new Node[62];	
 		
 		
 		

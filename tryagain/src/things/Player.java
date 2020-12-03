@@ -1,7 +1,5 @@
 package things;
 
-import matrixes.Vector2f;
-
 public class Player extends Entity{
 
 	public int xInGame, yInGame;
