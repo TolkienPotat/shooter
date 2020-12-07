@@ -30,7 +30,7 @@ public class EnemyHandler {
 	public void tick(Player p, Map m) {
 		System.out.println(enemies.size());
 		for (int i = 0; i < enemies.size(); i++) {
-			if (enemies.get(i).health <= 0) {
+			if (enemies.get(i).health <= 0 || enemies.get(i).shouldKillNextTick == true) {
 				delete(i);
 				continue;
 			}

@@ -17,6 +17,8 @@ public class Enemy extends Entity{
 	private int movingShake = 0;
 	private boolean atNeg = false;
 	
+	public boolean shouldKillNextTick = false;
+	
 	private int ticksNotPathFound = 601;
 	
 	ArrayList<Integer> movement = new ArrayList<Integer>();
@@ -36,7 +38,7 @@ public class Enemy extends Entity{
 	
 	
 	public void tick(Player p, Map m) {
-		if (ticksNotPathFound > 600) {
+		if (ticksNotPathFound > 60) {
 			pathFind(p, m);
 			ticksNotPathFound = 0;
 		}
@@ -122,7 +124,7 @@ public class Enemy extends Entity{
 		Node start = new Node(eX, eY);
 		Node current = start;
 		
-//		Node[] edge = new Node[62];	
+		Node[] edge = new Node[62];	
 		
 		
 		
@@ -146,19 +148,25 @@ public class Enemy extends Entity{
 				
 			}
 		}
-		
+		int falseCount = 0;
 		boolean foundTarget = false;
 		while (!foundTarget) {
+			falseCount = 0;
 			
-			System.out.println(open.size());
-			current = open.get(0);
+			if (open.size() > 0) {
+				current = open.get(0);
+			} else {
+				current = start;
+			}
+			
 			for (int i = 0; i < open.size(); i++) {
-				System.out.println(open.size());
+				
+				
 				open.get(i).getfCost(target, start);
 				current.getfCost(target, start);
-				System.out.println(i);
+				
 				if (current.fCost > open.get(i).fCost) {
-					
+					System.out.println("current is more than open");
 					current = open.get(i);
 					open.remove(i);
 					open.add(0, current);
@@ -166,9 +174,12 @@ public class Enemy extends Entity{
 				
 			}
 			
-			
-			
+			System.out.println( " open size is " + open.size());
+			current.printCoords();
+			target.printCoords();
 			closed.put(new Point(current.x, current.y).toString(), current);
+			System.out.println("current gcost is " + current.gCost);
+			
 			if (open.size() > 0) {
 				open.remove(0);
 				
@@ -176,25 +187,30 @@ public class Enemy extends Entity{
 				current = start;
 			}
 
-//			System.out.println(current.fCost);
-			current.printCoords();
+
+
 			try {
 				if (nodes[current.x + 1][current.y].passable && !closed.containsKey(new Point(current.x + 1, current.y).toString())) {			
 					nodes[current.x + 1][current.y].comesFrom = current;
 					open.add(nodes[current.x + 1][current.y]);
+					
+				} else {
+					falseCount++;
 				}
 				
-			} catch (ArrayIndexOutOfBoundsException e) {}
+			} catch (ArrayIndexOutOfBoundsException e) {falseCount++;}
 			
 			try {
 				if (nodes[current.x - 1][current.y].passable && !closed.containsKey(new Point(current.x - 1, current.y).toString())) {
 					nodes[current.x - 1][current.y].comesFrom = current;
 					open.add(nodes[current.x - 1][current.y]);
 
-
+				} else {
+					falseCount++;
 				}
 				
-				} catch (ArrayIndexOutOfBoundsException e) {}
+				
+				} catch (ArrayIndexOutOfBoundsException e) {falseCount++;}
 			
 			try {
 				if (nodes[current.x][current.y + 1].passable && !closed.containsKey(new Point(current.x, current.y + 1).toString())) {
@@ -202,22 +218,40 @@ public class Enemy extends Entity{
 					open.add(nodes[current.x][current.y + 1]);
 
 
+				} else {
+					falseCount++;
 				}
 				
-				} catch (ArrayIndexOutOfBoundsException e) {}
+				} catch (ArrayIndexOutOfBoundsException e) {falseCount++;}
 			
 			try {
 				if (nodes[current.x][current.y - 1].passable && !closed.containsKey(new Point(current.x, current.y - 1).toString())) {
 					nodes[current.x][current.y - 1].comesFrom = current;
 					open.add(nodes[current.x][current.y - 1]);
 
+				} else {
+					falseCount++;
 				}
-				} catch (ArrayIndexOutOfBoundsException e) {}
+				
+				} catch (ArrayIndexOutOfBoundsException e) {falseCount++;}
 			
 			if (current.x == target.x && current.y == target.y) {
 				foundTarget = true;
-				System.out.println("found path");
+				
 			}
+			if (current.fCost < 5) {
+				foundTarget = true;
+			}
+			if (current.fCost > 20) {
+				foundTarget = true;
+			}
+			if (falseCount == 4) {
+				return;
+			}
+		}
+		if (falseCount == 4) {
+			shouldKillNextTick = true;
+			return;
 		}
 		boolean movedBack = false;
 		while (!movedBack) {

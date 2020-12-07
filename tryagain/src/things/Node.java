@@ -33,13 +33,15 @@ public class Node {
 		
 		gCost = gX + gY;
 		
+		fCost = gCost;
+		
 		int hX = Math.abs(start.x - x);
 		int hY = Math.abs(start.y - y);
 		
 		hCost = hY + hX;
 		
 		fCost = gCost + hCost;
-		System.out.println("gcost is " + gCost + " and hCost is " + hCost + " fCost is: " + fCost);
+//		System.out.println("gcost is " + gCost + " and hCost is " + hCost + " fCost is: " + fCost);
 		return fCost;
 		
 	}

@@ -39,6 +39,8 @@ public class GameState implements State{
 	private int summonRate = 60;
 	private int ticksGoneNoSum = 0;
 
+	ArrayList<Point> spawnSpaces = new ArrayList<Point>();
+	
 	public GameState() {
 		
 		renderer = new Renderer();
@@ -93,14 +95,11 @@ public class GameState implements State{
 			
 		}
 		
-		/*for (int i = 0; i < enemy.enemies.size(); i++) {
-			enemy.enemies.get(i).line.setLine(player.xInGame, player.yInGame, enemy.enemies.get(i).xInGame, enemy.enemies.get(i).yInGame);
-			for (int j = map.tiles[Math.floorDiv((int) enemy.enemies.get(j).line.getX1(), 40)][Math.floorDiv((int) enemy.enemies.get(j).line.getY1(), 40)].xInGame*40; j <  )
-		}*/
+	
 		
 		ticksGoneNoSum++;
 		if (ticksGoneNoSum == summonRate) {
-			enemy.summon((random.nextInt(2)*3880),random.nextInt(2)*1880);
+			enemy.summon(spawnSpaces.get(random.nextInt(spawnSpaces.size())).x * 40, spawnSpaces.get(random.nextInt(spawnSpaces.size())).y * 40);
 //			enemy.summon(50*40, 25*40);
 			ticksGoneNoSum = 0;
 		}
@@ -134,11 +133,39 @@ public class GameState implements State{
 		player.xInGame = (map.length * 40) / 2 + (random.nextInt(480) - 240);
 		player.yInGame = map.width * 40 / 2 + (random.nextInt(480) - 240);
 
-
+		addSpawnSpots();
 		
 		
 		
 	}
+
+	private void addSpawnSpots() {
+		
+		addSpawnPoint(1, 48);
+		addSpawnPoint(25, 35);
+		addSpawnPoint(34, 34);
+		addSpawnPoint(35, 47);
+		addSpawnPoint(24, 17);
+		addSpawnPoint(56, 46);
+		addSpawnPoint(95, 35);
+		addSpawnPoint(98, 48);
+		addSpawnPoint(75, 23);
+		addSpawnPoint(77, 17);
+		addSpawnPoint(89, 1);
+
+
+
+
+
+		
+	}
+	
+	private void addSpawnPoint(int x, int y) {
+		
+		spawnSpaces.add(new Point(x, x));
+	
+	}
+	
 
 	@Override
 	public void exit() {
