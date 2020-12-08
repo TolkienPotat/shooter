@@ -21,6 +21,8 @@ public class Enemy extends Entity{
 	
 	private int ticksNotPathFound = 601;
 	
+	public int ticksNoAction = 0;
+	
 	ArrayList<Integer> movement = new ArrayList<Integer>();
 	
 	public Line2D line;
@@ -239,23 +241,25 @@ public class Enemy extends Entity{
 				foundTarget = true;
 				
 			}
-			if (current.fCost < 5) {
+			if (current.fCost < 5 || current.gCost < 3) {
 				foundTarget = true;
-			}
-			if (current.fCost > 20) {
+			} else if (current.fCost > 20) {
 				foundTarget = true;
+				ticksNoAction++;
 			}
 			if (falseCount == 4) {
 				return;
 			}
 		}
-		if (falseCount == 4) {
+		if (falseCount == 4 || ticksNoAction > 300) {
 			shouldKillNextTick = true;
 			return;
 		}
 		boolean movedBack = false;
 		while (!movedBack) {
-
+			
+			ticksNoAction = 0;
+			
 			if (current.x == start.x && current.y == start.y) {
 				movedBack = true;
 				continue;

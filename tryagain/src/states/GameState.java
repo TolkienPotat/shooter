@@ -36,7 +36,7 @@ public class GameState implements State{
 	
 	private EnemyHandler enemy;
 	
-	private int summonRate = 60;
+	private int summonRate = 30;
 	private int ticksGoneNoSum = 0;
 
 	ArrayList<Point> spawnSpaces = new ArrayList<Point>();
