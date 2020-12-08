@@ -13,7 +13,7 @@ public class EnemyHandler {
 	}
 	
 	public void summon(int x, int y) {
-		if (enemies.size() == 25) {
+		if (enemies.size() == 100) {
 			return;
 		}
 		enemies.add(new Enemy());
