@@ -62,18 +62,7 @@ public class Enemy extends Entity{
 		if (xInGame > p.xInGame) {
 			x = xInGame - p.xInGame - doShake();
 			y = yInGame - p.yInGame;
-			if (shake != 0 && movement.size() > 0) {
-				if (movement.get(0) == 1)
-					xInGame+=4;
-				else if (movement.get(0) == 2)
-					xInGame-=4;
-				else if (movement.get(0) == 3)
-					yInGame+=4;
-				else if (movement.get(0) == 4) 
-					yInGame-=4;
-				
-			movement.remove(0);
-			}
+
 		} else {
 			x = xInGame - p.xInGame + doShake();
 			y = yInGame - p.yInGame;
@@ -126,10 +115,6 @@ public class Enemy extends Entity{
 		Node start = new Node(eX, eY);
 		Node current = start;
 		
-		Node[] edge = new Node[62];	
-		
-		
-		
 		start.printCoords();
 		target.printCoords();
 		ArrayList<Node> open = new ArrayList<Node>();
@@ -168,7 +153,6 @@ public class Enemy extends Entity{
 				current.getfCost(target, start);
 				
 				if (current.fCost > open.get(i).fCost) {
-					System.out.println("current is more than open");
 					current = open.get(i);
 					open.remove(i);
 					open.add(0, current);
@@ -176,11 +160,10 @@ public class Enemy extends Entity{
 				
 			}
 			
-			System.out.println( " open size is " + open.size());
-			current.printCoords();
-			target.printCoords();
+
+
 			closed.put(new Point(current.x, current.y).toString(), current);
-			System.out.println("current gcost is " + current.gCost);
+
 			
 			if (open.size() > 0) {
 				open.remove(0);

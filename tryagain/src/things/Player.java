@@ -1,12 +1,20 @@
 package things;
 
+import java.awt.Point;
+
 public class Player extends Entity{
 
 	public int xInGame, yInGame;
 	
+	
+	//walls don't stop you and enemies don't kill you if this is enabled
 	private boolean devMode = false;
 	
+	//movement speed
 	private int speed = 4;
+	
+	//position bullets are fired from
+	public Point guntipPos;
 	
 	public Player() {
 		
@@ -17,6 +25,8 @@ public class Player extends Entity{
 		yInGame = 10;
 		
 		health = 50;
+		
+		guntipPos = new Point(15, 30);
 		
 	}
 	

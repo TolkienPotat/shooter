@@ -23,12 +23,17 @@ public class GameState implements State{
 	
 	private Map map;
 	
+	
+	//bullet spread, in degrees
 	private int accuracy = 10;
-	private int fireRate = 1;
+	
+	//speed of fire - higher the number, the slower 1-60
+	private int fireRate = 6;
+	
 	private int shotsTicked = 0;
 	
-//	private int shootsound;
-//	private Source source;
+	//distance in which the player spawns from the center of the map
+	private int spawnDistance = 240;
 	
 	private ArrayList<Bullet> bullets;
 	
@@ -36,7 +41,10 @@ public class GameState implements State{
 	
 	private EnemyHandler enemy;
 	
-	private int summonRate = 30;
+	//speed enemies spawn - lower is faster 1-60
+	private int summonRate = 20;
+	
+	
 	private int ticksGoneNoSum = 0;
 
 	ArrayList<Point> spawnSpaces = new ArrayList<Point>();
@@ -100,7 +108,6 @@ public class GameState implements State{
 		ticksGoneNoSum++;
 		if (ticksGoneNoSum == summonRate) {
 			enemy.summon(spawnSpaces.get(random.nextInt(spawnSpaces.size())).x * 40, spawnSpaces.get(random.nextInt(spawnSpaces.size())).y * 40);
-//			enemy.summon(50*40, 25*40);
 			ticksGoneNoSum = 0;
 		}
 		
@@ -126,12 +133,12 @@ public class GameState implements State{
 
 	@Override
 	public void init() {
-		
-		renderer.init();
 		System.out.println("initiating the renderer");
+		renderer.init();
+		System.out.println("Renderer successfully initiated");
 		player.createTexture("Textures/character.png");
-		player.xInGame = (map.length * 40) / 2 + (random.nextInt(480) - 240);
-		player.yInGame = map.width * 40 / 2 + (random.nextInt(480) - 240);
+		player.xInGame = (map.length * 40) / 2 + (random.nextInt(spawnDistance*2) - spawnDistance);
+		player.yInGame = map.width * 40 / 2 + (random.nextInt(spawnDistance*2) - spawnDistance);
 
 		addSpawnSpots();
 		
@@ -212,8 +219,8 @@ public class GameState implements State{
 		
 	}
 	
-	public float getAngle(Point target) {
-	    float angle = (float) Math.toDegrees(Math.atan2(target.y - 0, target.x - 0));
+	public float getAngle(Point target, Point start) {
+	    float angle = (float) Math.toDegrees(Math.atan2(target.y - start.y, target.x - start.x));
 
 	    if(angle < 0){
 	        angle += 360;
@@ -225,9 +232,9 @@ public class GameState implements State{
 	public void shoot() {
 		shotsTicked++;
 		if (shotsTicked == fireRate) {
-			bullets.add(new Bullet((getAngle(getCursor(Initiate.window.id)) + (random.nextInt(accuracy) - accuracy)), renderer));
-			bullets.get(bullets.size() - 1).xInGame = player.xInGame + 25;
-			bullets.get(bullets.size() - 1).yInGame = player.yInGame + 15;
+			bullets.add(new Bullet((getAngle   (getCursor(Initiate.window.id), player.guntipPos) + (random.nextInt(accuracy*2) - accuracy)), renderer));
+			bullets.get(bullets.size() - 1).xInGame = player.xInGame + player.guntipPos.x;
+			bullets.get(bullets.size() - 1).yInGame = player.yInGame + player.guntipPos.y;
 			bullets.get(bullets.size() - 1).render();
 			shotsTicked = 0;
 			

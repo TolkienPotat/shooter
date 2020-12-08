@@ -41,7 +41,6 @@ public class Node {
 		hCost = hY + hX;
 		
 		fCost = gCost + hCost;
-//		System.out.println("gcost is " + gCost + " and hCost is " + hCost + " fCost is: " + fCost);
 		return fCost;
 		
 	}
