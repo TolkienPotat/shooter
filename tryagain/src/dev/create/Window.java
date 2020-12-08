@@ -24,6 +24,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_A;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_D;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_RIGHT;
+import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
 
 import static org.lwjgl.glfw.GLFW.glfwSetWindowShouldClose;
@@ -147,14 +148,7 @@ public class Window {
 	            	GameLoop.moveXDirectionp = 0;
 	            	
 	            }
-	            if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
-	            	Initiate.game.shooting = true;
-	            	
-	            }
-	            if (key == GLFW_KEY_SPACE && action == GLFW_RELEASE) {
-	            	Initiate.game.shooting = false;
-	            	
-	            }
+	            
 	            
 	            
 	            
@@ -162,6 +156,22 @@ public class Window {
 	        }
 	    };
 		GLFW.glfwSetKeyCallback(id, input);
+		
+		GLFW.glfwSetMouseButtonCallback(id, minput = new GLFWMouseButtonCallback() {
+			public void invoke(long window, int button, int action, int mods) {
+				if (button == GLFW_MOUSE_BUTTON_LEFT) {
+					if (action == GLFW_PRESS)
+						Initiate.game.leftMouseDown = true;
+					else if (action == GLFW_RELEASE)
+						Initiate.game.leftMouseDown = false;
+				} else if (button == GLFW_MOUSE_BUTTON_RIGHT) {
+					if (action == GLFW_PRESS)
+						Initiate.game.rightMouseDown = true;
+					else if (action == GLFW_RELEASE)
+						Initiate.game.rightMouseDown = false;
+				}
+			}
+		});
 		
 	}
 	

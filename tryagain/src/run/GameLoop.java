@@ -29,6 +29,9 @@ public class GameLoop {
 	public static int moveYDirectionp;
 	
 	public boolean shooting;
+	
+	public boolean leftMouseDown;
+	public boolean rightMouseDown;
 
 	
 	public GameLoop() {
@@ -98,7 +101,7 @@ public class GameLoop {
 
 
 	private void tick(boolean shooting) {
-
+		shooting = leftMouseDown;
 		state.tick(shooting);
 		
 		
