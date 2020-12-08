@@ -152,6 +152,13 @@ public class GameState implements State{
 		addSpawnPoint(75, 23);
 		addSpawnPoint(77, 17);
 		addSpawnPoint(89, 1);
+		addSpawnPoint(80, 48);
+		addSpawnPoint(6, 19);
+		addSpawnPoint(1, 1);
+		addSpawnPoint(14, 3);
+		addSpawnPoint(45, 4);
+		addSpawnPoint(71, 12);
+		addSpawnPoint(66, 29);
 
 
 
