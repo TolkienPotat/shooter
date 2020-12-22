@@ -18,6 +18,7 @@ public class Enemy extends Entity{
 	private boolean atNeg = false;
 	
 	public boolean shouldKillNextTick = false;
+	public boolean shootThisTick = false;
 	
 	private int ticksNotPathFound = 601;
 	
@@ -27,6 +28,12 @@ public class Enemy extends Entity{
 	
 	public Line2D line;
 	
+	public Point center;
+	
+	public Point gunTipPos;
+	
+	private int shotsTicked = 0;
+	
 	public Enemy() {
 		
 		createTexture("Textures/enemy.png");
@@ -34,17 +41,32 @@ public class Enemy extends Entity{
 		health = 10;
 		line = new Line2D.Float();
 		
+		center = new Point();
+		
+		gunTipPos = new Point();
 		
 	}
 	
 	
 	
 	public void tick(Player p, Map m) {
+		
+		
+		
+		center.setLocation(x + texture.getWidth()/2, y + texture.getHeight()/2);
+		
+		gunTipPos.setLocation(xInGame + 22, yInGame + 25);
+		
+		
+		
 		if (ticksNotPathFound > 60) {
+			System.out.println("ticking enemy at " + xInGame/40 + " " + yInGame/40);
 			pathFind(p, m);
 			ticksNotPathFound = 0;
 		}
 		ticksNotPathFound++;
+		
+		shoot(p, m);
 		
 		r.setBounds(xInGame, yInGame, texture.getWidth(), texture.getHeight());
 		
@@ -115,8 +137,13 @@ public class Enemy extends Entity{
 		Node start = new Node(eX, eY);
 		Node current = start;
 		
-		start.printCoords();
-		target.printCoords();
+		current.getfCost(target, start);
+		if (current.fCost > 20) {
+			ticksNoAction++;
+			return;
+			
+		}
+		
 		ArrayList<Node> open = new ArrayList<Node>();
 		HashMap <String, Node> closed = new HashMap<String, Node>();
 		
@@ -172,7 +199,7 @@ public class Enemy extends Entity{
 				current = start;
 			}
 
-
+			
 
 			try {
 				if (nodes[current.x + 1][current.y].passable && !closed.containsKey(new Point(current.x + 1, current.y).toString())) {			
@@ -220,16 +247,11 @@ public class Enemy extends Entity{
 				
 				} catch (ArrayIndexOutOfBoundsException e) {falseCount++;}
 			
-			if (current.x == target.x && current.y == target.y) {
+			
+			if ( current.gCost < 3) {
 				foundTarget = true;
-				
-			}
-			if (current.fCost < 5 || current.gCost < 3) {
-				foundTarget = true;
-			} else if (current.fCost > 20) {
-				foundTarget = true;
-				ticksNoAction++;
-			}
+			} 
+			
 			if (falseCount == 4) {
 				return;
 			}
@@ -268,6 +290,20 @@ public class Enemy extends Entity{
 			current = current.comesFrom;
 			
 			
+		}
+		
+	}
+	
+	public void shoot(Player p, Map m) {
+		
+		shotsTicked++;
+		
+		if (p.center.distance(center) < 200 && shotsTicked > 8) {
+			
+			shootThisTick = true;
+			shotsTicked = 0;
+		} else {
+			shootThisTick = false;
 		}
 		
 	}
