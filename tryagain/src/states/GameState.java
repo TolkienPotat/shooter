@@ -24,16 +24,13 @@ public class GameState implements State{
 	private Map map;
 	
 	
-	//bullet spread, in degrees
-	private int accuracy = 10;
 	
-	//speed of fire - higher the number, the slower 1-60
-	private int fireRate = 6;
+	
 	
 	private int shotsTicked = 0;
 	
 	//distance in which the player spawns from the center of the map
-	private int spawnDistance = 240;
+	
 	
 	private ArrayList<Bullet> bullets;
 	
@@ -63,22 +60,37 @@ public class GameState implements State{
 
 	@Override
 	public void tick(boolean shooting) {
+		shotsTicked++;
+		if (Initiate.game.rightMouseDown && !Initiate.game.rightMouseDownPrevious) {
+			player.switchWeapons();
+		}
 		
 		if (shooting) {
 			shoot();
 		}
 		
-		player.updateRect();
+		player.tick();
 
 		for (int i = 0; i < bullets.size(); i++) {
 			boolean bulletDead = false;
 			bullets.get(i).move();
 			
+			if (bullets.get(i).r.intersects(player.r) && bullets.get(i).owner == 1) {
+				player.health -= bullets.get(i).damage;
+				System.out.println("Your health is now " + player.health);
+				bullets.remove(i);
+				bulletDead = true;
+			}
+			
+			if (bulletDead) {
+				bulletDead = false;
+				continue;
+			}
 			
 			for (int j = 0; j < enemy.enemies.size(); j++) {
 		
-				if (enemy.enemies.get(j).r.intersects(bullets.get(i).r)) {
-					enemy.enemies.get(j).health --;
+				if (enemy.enemies.get(j).r.intersects(bullets.get(i).r) && bullets.get(i).owner == 0) {
+					enemy.enemies.get(j).health -= bullets.get(i).damage;
 					enemy.enemies.get(j).shake(2);
 					bullets.remove(i);
 					bulletDead = true;
@@ -88,7 +100,6 @@ public class GameState implements State{
 			}
 			
 			if (bulletDead) {
-				
 				bulletDead = false;
 				continue;
 			}
@@ -107,12 +118,18 @@ public class GameState implements State{
 		
 		ticksGoneNoSum++;
 		if (ticksGoneNoSum == summonRate) {
-			enemy.summon(spawnSpaces.get(random.nextInt(spawnSpaces.size())).x * 40, spawnSpaces.get(random.nextInt(spawnSpaces.size())).y * 40);
+			Point p = spawnSpaces.get(random.nextInt(spawnSpaces.size()));
+			enemy.summon(p.x * 40, p.y * 40);
 			ticksGoneNoSum = 0;
 		}
 		
 		enemy.tick(player, map);
 		
+		for (int i = 0; i < enemy.enemies.size(); i++) {
+			if (enemy.enemies.get(i).shootThisTick) {
+				bullets.add(new Bullet(getAngle(player.center, enemy.enemies.get(i).center), renderer, 1, enemy.enemies.get(i).gunTipPos.x, enemy.enemies.get(i).gunTipPos.y, 10, 1));
+			}
+		}
 		
 		
 	}
@@ -121,26 +138,30 @@ public class GameState implements State{
 	public void render() {
 		renderer.clear();
 		map.renderMap(player);
-		player.draw();
 		
+		
+		
+		renderer.begin();
 		for (int i = 0; i < bullets.size(); i++) {
 			bullets.get(i).posX = bullets.get(i).xInGame - player.xInGame;
 			bullets.get(i).posY = bullets.get(i).yInGame - player.yInGame;
 			bullets.get(i).render();
 		}
-		enemy.render();
+		
+		renderer.end();
+		
+		enemy.render(renderer, player);
+		player.draw();
 	}
 
 	@Override
 	public void init() {
-		System.out.println("initiating the renderer");
+		
 		renderer.init();
-		System.out.println("Renderer successfully initiated");
-		player.createTexture("Textures/character.png");
-		player.xInGame = (map.length * 40) / 2 + (random.nextInt(spawnDistance*2) - spawnDistance);
-		player.yInGame = map.width * 40 / 2 + (random.nextInt(spawnDistance*2) - spawnDistance);
-
+		player.init(map);
 		addSpawnSpots();
+		enemy.enemies.clear();
+		bullets.clear();
 		
 		
 		
@@ -166,6 +187,25 @@ public class GameState implements State{
 		addSpawnPoint(45, 4);
 		addSpawnPoint(71, 12);
 		addSpawnPoint(66, 29);
+		addSpawnPoint(12, 15);
+		addSpawnPoint(45, 39);
+		addSpawnPoint(39, 21);
+		addSpawnPoint(53, 14);
+		addSpawnPoint(96, 3);
+		addSpawnPoint(89, 21);
+		addSpawnPoint(76, 7);
+		addSpawnPoint(25, 24);
+		addSpawnPoint(40, 30);
+		addSpawnPoint(87, 28);
+		addSpawnPoint(4, 44);
+		addSpawnPoint(19, 46);
+		addSpawnPoint(9, 36);
+		addSpawnPoint(0, 31);
+		addSpawnPoint(2, 28);
+		addSpawnPoint(58, 8);
+		addSpawnPoint(31, 1);
+		addSpawnPoint(72, 18);
+		addSpawnPoint(75, 45);
 
 
 
@@ -176,7 +216,7 @@ public class GameState implements State{
 	
 	private void addSpawnPoint(int x, int y) {
 		
-		spawnSpaces.add(new Point(x, x));
+		spawnSpaces.add(new Point(x, y));
 	
 	}
 	
@@ -230,11 +270,13 @@ public class GameState implements State{
 	}
 	
 	public void shoot() {
-		shotsTicked++;
-		if (shotsTicked == fireRate) {
-			bullets.add(new Bullet((getAngle   (getCursor(Initiate.window.id), player.guntipPos) + (random.nextInt(accuracy*2) - accuracy)), renderer));
-			bullets.get(bullets.size() - 1).xInGame = player.xInGame + player.guntipPos.x;
-			bullets.get(bullets.size() - 1).yInGame = player.yInGame + player.guntipPos.y;
+		
+		
+		if (shotsTicked >= player.currentGun.firerate) {
+			
+			for (int i = 0; i < player.currentGun.shotsPerShot; i++) {
+				bullets.add(new Bullet((getAngle(getCursor(Initiate.window.id), player.gtpOnScreen) + (random.nextInt(player.currentGun.spread*2) - player.currentGun.spread)), renderer, 0, player.guntipPos.x, player.guntipPos.y, player.currentGun.velocity, player.currentGun.damage));
+			}
 			bullets.get(bullets.size() - 1).render();
 			shotsTicked = 0;
 			
