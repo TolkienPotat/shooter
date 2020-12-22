@@ -59,7 +59,7 @@ public class Renderer {
             font = new Font();
         }
         debugFont = new Font(12, false);
-        
+        System.out.println("Renderer Successfully Initiated");
     }
     
     public void clear() {
