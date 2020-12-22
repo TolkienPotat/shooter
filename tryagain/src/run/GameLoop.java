@@ -33,6 +33,8 @@ public class GameLoop {
 	public boolean leftMouseDown;
 	public boolean rightMouseDown;
 
+	public boolean rightMouseDownPrevious;
+	
 	
 	public GameLoop() {
 		
@@ -106,7 +108,7 @@ public class GameLoop {
 		
 		
 		
-		
+		rightMouseDownPrevious = rightMouseDown;
 	}
 
 	private void input() {
