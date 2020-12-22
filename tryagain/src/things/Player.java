@@ -1,6 +1,10 @@
 package things;
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Random;
+
+import dev.create.Initiate;
 
 public class Player extends Entity{
 
@@ -16,6 +20,21 @@ public class Player extends Entity{
 	//position bullets are fired from
 	public Point guntipPos;
 	
+	public Point center;
+	
+	public Point gtpOnScreen;
+	
+	Random random;
+
+
+	public Gun currentGun;
+	
+	int gunPositionValue;
+	
+	private ArrayList<Gun> guns;
+	
+	private int spawnDistance = 240;
+	
 	public Player() {
 		
 		x = 0;
@@ -26,11 +45,35 @@ public class Player extends Entity{
 		
 		health = 50;
 		
-		guntipPos = new Point(15, 30);
+		guntipPos = new Point(xInGame + 15,yInGame + 20);
+		
+		gtpOnScreen = new Point(15, 20);
+		
+		center = new Point(12, 25);
+		
+		random = new Random();
+		
+		
+		
+		guns = new ArrayList<Gun>();
+		
+		addGuns();
+		
+		currentGun = guns.get(0);
+		gunPositionValue = 0;
 		
 	}
 	
-	
+	public void tick() {
+		
+		if (health <= 0) {
+			Initiate.game.newState = "Lobby";
+		}
+		
+		updateRect();
+		guntipPos.setLocation(xInGame + 15,yInGame + 20);
+		
+	}
 	
 
 	public void moveUpDown(int direction, Map map) {
@@ -147,4 +190,40 @@ public class Player extends Entity{
 	public String getCoords() {
 		return xInGame + " " + yInGame;
 	}
+	
+	public void init(Map map) {
+		createTexture("Textures/character.png");
+		xInGame = (map.length * 40) / 2 + (random.nextInt(spawnDistance *2) - spawnDistance);
+		yInGame = map.width * 40 / 2 + (random.nextInt(spawnDistance*2) - spawnDistance);
+		health = 50;
+	}
+	
+	public void switchWeapons() {
+		
+		gunPositionValue++;
+		
+		if (gunPositionValue >= guns.size()) {
+			
+			gunPositionValue = 0;
+			
+		} 
+		
+		currentGun = guns.get(gunPositionValue);
+		
+		System.out.println("Switched to gun " + currentGun.name);
+		
+	}
+	
+	public void addGuns() {
+		
+		//fast, straight
+		guns.add(new Gun(20, 1, 5, 13, "AK-47", 1));
+		
+		//shotgun
+		guns.add(new Gun(2, 15, 15, 10, "Shotgun", 1));
+		
+		guns.add(new Gun(1, 1, 1, 35, "Sniper", 10));
+		
+	}
+	
 }
