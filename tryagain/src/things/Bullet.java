@@ -53,7 +53,6 @@ public class Bullet {
 		
 	}
 	
-	
 
 	public void move() {
 		
