@@ -15,7 +15,7 @@ public class Bullet {
 	
 	float angle;
 	
-	float velocity = 13;
+	float velocity;
 	
 	double velocityX, velocityY;
 	
@@ -23,24 +23,38 @@ public class Bullet {
 	
 	private Renderer renderer;
 	
+	public int owner;
+	
+	public int damage;
+	
 	Texture texture;
 	
 	public Rectangle r;
 	
-	public Bullet(float angle, Renderer renderer) {
+	public Bullet(float angle, Renderer renderer, int owner, int xInGame, int yInGame, int velocity, int damage) {
 		
 		texture = new Texture();
 		texture = Texture.loadTexture("Textures/bullet.png");
 		
 		this.renderer = renderer;
 		
+		this.owner = owner;
 		
 		this.angle = angle;
+		
+		this.xInGame = xInGame;
+		this.yInGame = yInGame;
+		
+		this.velocity = velocity;
+		
+		this.damage = damage;
 		
 		r = new Rectangle();
 		
 	}
 	
+	
+
 	public void move() {
 		
 		velocityX =  (velocity*Math.cos(Math.toRadians(angle)));
@@ -58,13 +72,10 @@ public class Bullet {
 	}
 
 	public void render() {
-		
-		
-		
-		renderer.begin();
+
 		renderer.drawTexture(texture, posX, posY);
 		texture.bind();
-		renderer.end();
+		
 	}
 	
 }
