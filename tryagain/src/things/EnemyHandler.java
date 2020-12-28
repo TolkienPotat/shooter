@@ -10,12 +10,15 @@ public class EnemyHandler {
 	
 	BodyHandler bodyHandler;
 	
+	public int score;
+	
 	public EnemyHandler() {
 		
 		enemies = new ArrayList<Enemy>();
 		
 		bodyHandler = new BodyHandler();
 		
+		score = 0;
 	}
 	
 	public void summon(int x, int y) {
@@ -25,8 +28,13 @@ public class EnemyHandler {
 		enemies.add(new Enemy());
 		enemies.get(enemies.size() - 1).xInGame = x;
 		enemies.get(enemies.size() - 1).yInGame = y;
-//		System.out.println("Summoning. at " + x/40 + " " + y/40);
 		
+	}
+	
+	public void clear() {
+		enemies.clear();
+		bodyHandler.bodies.clear();
+		score = 0;
 	}
 	
 	public void delete(int enemy, boolean dead) {
@@ -43,9 +51,10 @@ public class EnemyHandler {
 		for (int i = 0; i < enemies.size(); i++) {
 			if (enemies.get(i).health <= 0) {
 				delete(i, true);
+				score++;
 				continue;
 			} else if (enemies.get(i).shouldKillNextTick == true) {
-				delete(i, true);
+				delete(i, false);
 				continue;
 			}
 			enemies.get(i).tick(p, m);
