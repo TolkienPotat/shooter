@@ -12,7 +12,7 @@ public class Player extends Entity{
 	
 	
 	//walls don't stop you and enemies don't kill you if this is enabled
-	private boolean devMode = false;
+	public boolean devMode = false;
 	
 	//movement speed
 	private int speed = 4;
