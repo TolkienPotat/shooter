@@ -65,7 +65,6 @@ public class LobbyState implements State {
 
 	@Override
 	public void input() {
-		// TODO Auto-generated method stub
 		
 	}
 
