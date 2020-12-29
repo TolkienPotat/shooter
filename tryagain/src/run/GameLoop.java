@@ -5,7 +5,9 @@ import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 
 import dev.create.Initiate;
+import states.DeathState;
 import states.GameState;
+import states.LoadingState;
 import states.LobbyState;
 import states.StateMachine;
 
@@ -34,6 +36,8 @@ public class GameLoop {
 	public boolean rightMouseDown;
 
 	public boolean rightMouseDownPrevious;
+	
+	public int score;
 	
 	
 	public GameLoop() {
@@ -123,9 +127,11 @@ public class GameLoop {
 		state = new StateMachine();
 		state.add("Game", (new GameState()));
 		state.add("Lobby", (new LobbyState()));
-		state.change("Lobby");
-		newState = "Lobby";
-		previousState = "Lobby";
+		state.add("Loading", (new LoadingState()));
+		state.add("Death", (new DeathState()));
+		state.change("Loading");
+		newState = "Loading";
+		previousState = "Loading";
 
 	}
 	
