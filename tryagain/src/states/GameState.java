@@ -39,7 +39,7 @@ public class GameState implements State {
 
 	private int ticksGoneNoEnemySummon = 0;
 	
-	public int score = 0;
+	
 	
 	NumberWriter scoreWriter;
 
@@ -123,7 +123,7 @@ public class GameState implements State {
 
 		enemy.tick(player, map);
 
-		score = enemy.score;
+		player.score = enemy.score;
 		
 		for (int i = 0; i < enemy.enemies.size(); i++) {
 			if (enemy.enemies.get(i).shootThisTick) {
@@ -151,7 +151,7 @@ public class GameState implements State {
 		enemy.render(renderer, player);
 		player.draw();
 		
-		scoreWriter.draw(220, 200, renderer, score);
+		scoreWriter.draw(220, 200, renderer, player.score);
 		
 	}
 
@@ -220,7 +220,7 @@ public class GameState implements State {
 
 	@Override
 	public void exit() {
-		score = 0;
+		player.score = 0;
 		bullets.clear();
 		enemy.clear();
 	}

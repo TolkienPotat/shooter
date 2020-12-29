@@ -35,6 +35,8 @@ public class Player extends Entity{
 	
 	private int spawnDistance = 240;
 	
+	public int score = 0;
+	
 	public Player() {
 		
 		x = 0;
@@ -67,7 +69,8 @@ public class Player extends Entity{
 	public void tick() {
 		
 		if (health <= 0) {
-			Initiate.game.newState = "Lobby";
+			Initiate.game.newState = "Death";
+			Initiate.game.score = score;
 		}
 		
 		updateRect();
@@ -217,7 +220,7 @@ public class Player extends Entity{
 	public void addGuns() {
 		
 		//fast, straight
-		guns.add(new Gun(20, 1, 5, 13, "AK-47", 1));
+		guns.add(new Gun(20, 1, 5, 13, "Auto-Rifle", 1));
 		
 		//shotgun
 		guns.add(new Gun(2, 15, 15, 10, "Shotgun", 1));
