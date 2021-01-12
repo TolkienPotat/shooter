@@ -44,6 +44,8 @@ public class ShaderProgram {
         return glGetAttribLocation(id, name);
     }
 	
+	
+	
 	public void enableVertexAttribute(int location) {
         glEnableVertexAttribArray(location);
     }
