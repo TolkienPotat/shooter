@@ -18,7 +18,7 @@ public class LoadingState implements State{
 		
 		r.begin();
 		black.bind();
-		r.drawTexture(black, 0 - black.getWidth()/2, 0 - black.getHeight()/2);
+		r.drawTexture(black, 0 - black.getWidth()/2, 0 - black.getHeight()/2, 10000, 10000);
 		r.end();
 		
 	}

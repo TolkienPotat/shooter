@@ -66,7 +66,7 @@ public class EnemyHandler {
 	
 	public void render(Renderer r, Player p) {
 		for (int i = 0; i < enemies.size(); i++) {
-			enemies.get(i).draw();
+			enemies.get(i).draw(enemies.get(i).xInGame, enemies.get(i).yInGame);
 		}
 		
 		bodyHandler.render(r, p);

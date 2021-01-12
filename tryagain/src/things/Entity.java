@@ -36,9 +36,9 @@ public class Entity {
 		texture.bind();
 	}
 	
-	public void draw() {
+	public void draw(int xig, int yig) {
 		renderer.begin();
-		renderer.drawTexture(texture, x, y);
+		renderer.drawTexture(texture, x, y, xig, yig);
 		texture.bind();
 		renderer.end();
 		

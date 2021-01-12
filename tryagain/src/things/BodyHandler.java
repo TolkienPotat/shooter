@@ -42,7 +42,7 @@ public class BodyHandler {
 		
 		for (int i = 0; i < bodies.size(); i++) {
 			r.begin();
-			r.drawTexture(textures.get(Math.floorDiv(bodies.get(i).age, 30)), bodies.get(i).x - p.xInGame, bodies.get(i).y - p.yInGame);
+			r.drawTexture(textures.get(Math.floorDiv(bodies.get(i).age, 30)), bodies.get(i).x - p.xInGame, bodies.get(i).y - p.yInGame, bodies.get(i).y, bodies.get(i).x);
 			textures.get(bodies.get(i).age / 30).bind();
 			r.end();
 		}

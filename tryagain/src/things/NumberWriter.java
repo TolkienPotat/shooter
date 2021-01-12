@@ -31,22 +31,22 @@ public class NumberWriter {
 
 			r.begin();
 			numbers[d0].bind();
-			r.drawTexture(numbers[d0], x, y);
+			r.drawTexture(numbers[d0], x, y, 10000, 10000);
 			x += textureWidth;
 			r.end();
 			r.begin();
 			numbers[d1].bind();
-			r.drawTexture(numbers[d1], x, y);
+			r.drawTexture(numbers[d1], x, y, 10000, 10000);
 			x += textureWidth;
 			r.end();
 			r.begin();
 			numbers[d2].bind();
-			r.drawTexture(numbers[d2], x, y);
+			r.drawTexture(numbers[d2], x, y, 10000, 10000);
 			x += textureWidth;
 			r.end();
 			r.begin();
 			numbers[d3].bind();
-			r.drawTexture(numbers[d3], x, y);
+			r.drawTexture(numbers[d3], x, y, 10000, 10000);
 			r.end();
 			
 			

@@ -22,7 +22,7 @@ public class DeathState  implements State{
 		r.clear();
 		
 		r.begin();
-		r.drawTexture(background,  - background.getWidth()/2, - background.getHeight()/2);
+		r.drawTexture(background,  - background.getWidth()/2, - background.getHeight()/2, 10000, 10000);
 		background.bind();
 		r.end();
 		scoreWriter.draw(-65, -31, r, score);

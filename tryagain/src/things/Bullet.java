@@ -72,7 +72,7 @@ public class Bullet {
 
 	public void render() {
 
-		renderer.drawTexture(texture, posX, posY);
+		renderer.drawTexture(texture, posX, posY, xInGame, yInGame);
 		texture.bind();
 		
 	}

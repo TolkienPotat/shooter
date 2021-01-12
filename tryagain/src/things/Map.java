@@ -76,13 +76,17 @@ public class Map {
 				renderer.begin();
 				tiles[i][j].x = (i*40) - (player.xInGame);
 				tiles[i][j].y = (j*40) - (player.yInGame);
-				renderer.drawTexture(tiles[i][j].texture,tiles[i][j].x,tiles[i][j].y);
-				tiles[i][j].texture.bind();
 				
-				renderer.end();
 				tiles[i][j].xInGame = i*40;
 				tiles[i][j].yInGame = j*40;
 				tiles[i][j].r.setBounds(tiles[i][j].xInGame, tiles[i][j].yInGame, 40, 40);
+				
+				tiles[i][j].texture.bind();
+				renderer.drawTexture(tiles[i][j].texture,tiles[i][j].x,tiles[i][j].y, tiles[i][j].xInGame, tiles[i][j].yInGame);
+				
+				
+				renderer.end();
+				
 			}
 		}
 		
