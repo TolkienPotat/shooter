@@ -58,6 +58,9 @@ public class GameState implements State {
 
 	@Override
 	public void tick(boolean shooting) {
+		
+		
+		
 		shotsTicked++;
 		if (Initiate.game.rightMouseDown && !Initiate.game.rightMouseDownPrevious) {
 			player.switchWeapons();
@@ -149,7 +152,7 @@ public class GameState implements State {
 		renderer.end();
 
 		enemy.render(renderer, player);
-		player.draw();
+		player.draw(player.xInGame, player.yInGame);
 		
 		scoreWriter.draw(220, 200, renderer, player.score);
 		
@@ -278,7 +281,9 @@ public class GameState implements State {
 						renderer, 0, player.guntipPos.x, player.guntipPos.y, player.currentGun.velocity,
 						player.currentGun.damage));
 			}
+			renderer.begin();
 			bullets.get(bullets.size() - 1).render();
+			renderer.end();
 			shotsTicked = 0;
 
 		}

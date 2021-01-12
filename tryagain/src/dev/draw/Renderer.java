@@ -1,22 +1,5 @@
 package dev.draw;
 
-import java.awt.Color;
-import java.awt.FontFormatException;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.lwjgl.glfw.GLFW;
-import org.lwjgl.system.MemoryStack;
-import org.lwjgl.system.MemoryUtil;
-
-import dev.draw.fonts.Font;
-
-import matrixes.Matrix4f;
-import run.GameLoop;
-
 import static org.lwjgl.opengl.GL11.GL_BLEND;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
@@ -32,6 +15,23 @@ import static org.lwjgl.opengl.GL15.GL_DYNAMIC_DRAW;
 import static org.lwjgl.opengl.GL20.GL_FRAGMENT_SHADER;
 import static org.lwjgl.opengl.GL20.GL_VERTEX_SHADER;
 
+import java.awt.Color;
+import java.awt.FontFormatException;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.lwjgl.glfw.GLFW;
+import org.lwjgl.system.MemoryStack;
+import org.lwjgl.system.MemoryUtil;
+
+import dev.draw.fonts.Font;
+import matrixes.Matrix4f;
+import run.GameLoop;
+
 public class Renderer {
 
 	private static VertexArray vao;
@@ -44,6 +44,8 @@ public class Renderer {
     
     private static Font font;
     private static Font debugFont;
+    
+    
     
     public void init() {
     	setupShaderProgram();
@@ -139,11 +141,17 @@ public class Renderer {
         debugFont.drawText(this, text, x, y, c);
     }
     
-    public void drawTexture(Texture texture, float x, float y) {
-        drawTexture(texture, x, y, Color.WHITE);
+    public void drawTexture(Texture texture, float x, float y, float xIG, float yIG) {
+    	
+        drawTexture(texture, x, y, new Color(1, 1, 1), xIG, yIG);
+        
     }
     
-    public static void drawTexture(Texture texture, float x, float y, Color c) {
+    public void drawColouredTexture(Texture texture, float x, float y, Color c, float xIG, float yIG) {
+        drawTexture(texture, x, y, c, xIG, yIG);
+    }
+    
+    public static void drawTexture(Texture texture, float x, float y, Color c, float xIG, float yIG) {
         /* Vertex positions */
         float x1 = x;
         float y1 = y;
@@ -156,14 +164,14 @@ public class Renderer {
         float s2 = 1f;
         float t2 = 1f;
 
-        drawTextureRegion(x1, y1, x2, y2, s1, t1, s2, t2, c); /*imp*/
+        drawTextureRegion(x1, y1, x2, y2, s1, t1, s2, t2, c, xIG, yIG); /*imp*/
     }
     
-    public void drawTextureRegion(Texture texture, float x, float y, float regX, float regY, float regWidth, float regHeight) {
-        drawTextureRegion(texture, x, y, regX, regY, regWidth, regHeight, Color.WHITE);
+    public void drawTextureRegion(Texture texture, float x, float y, float regX, float regY, float regWidth, float regHeight, float xIG, float yIG) {
+        drawTextureRegion(texture, x, y, regX, regY, regWidth, regHeight, Color.WHITE, xIG, yIG);
     }
     
-    public void drawTextureRegion(Texture texture, float x, float y, float regX, float regY, float regWidth, float regHeight, Color c) {
+    public void drawTextureRegion(Texture texture, float x, float y, float regX, float regY, float regWidth, float regHeight, Color c, float xIG, float yIG) {
         /* Vertex positions */
         float x1 = x;
         float y1 = y;
@@ -176,29 +184,31 @@ public class Renderer {
         float s2 = (regX + regWidth) / texture.getWidth();
         float t2 = (regY + regHeight) / texture.getHeight();
 
-        drawTextureRegion(x1, y1, x2, y2, s1, t1, s2, t2, c);
+        drawTextureRegion(x1, y1, x2, y2, s1, t1, s2, t2, c, xIG, yIG);
     }
     
-    public void drawTextureRegion(float x1, float y1, float x2, float y2, float s1, float t1, float s2, float t2) {
-        drawTextureRegion(x1, y1, x2, y2, s1, t1, s2, t2, Color.WHITE);
+    public void drawTextureRegion(float x1, float y1, float x2, float y2, float s1, float t1, float s2, float t2, float xIG, float yIG) {
+        drawTextureRegion(x1, y1, x2, y2, s1, t1, s2, t2, new Color(1, 1, 1), xIG, yIG);
     }
     
-    public static void drawTextureRegion(float x1, float y1, float x2, float y2, float s1, float t1, float s2, float t2, Color c) {
-        if (vertices.remaining() < 7 * 6) {
+    public static void drawTextureRegion(float x1, float y1, float x2, float y2, float s1, float t1, float s2, float t2, Color c, float xIG, float yIG) {
+        if (vertices.remaining() < 7 * 8) {
             /* We need more space in the buffer, so flush it */
             flush();
         }
-
-       
+        
+        float r = c.getRed();
+        float g = c.getGreen();
+        float b = c.getBlue();
         float a = c.getAlpha();
 
-        vertices.put(x1).put(y1).put(1f).put(1f).put(1f).put(a).put(0f).put(0f);
-        vertices.put(x1).put(y2).put(1f).put(1f).put(1f).put(a).put(0f).put(1f);
-        vertices.put(x2).put(y2).put(1f).put(1f).put(1f).put(a).put(1f).put(1f);
+        vertices.put(x1).put(y1).put(r).put(g).put(b).put(a).put(s1).put(t1).put(xIG + s1*40).put(yIG + t1*40);
+        vertices.put(x1).put(y2).put(r).put(g).put(b).put(a).put(s1).put(t2).put(xIG + s1*40).put(yIG + t2*40);
+        vertices.put(x2).put(y2).put(r).put(g).put(b).put(a).put(s2).put(t2).put(xIG + s2*40).put(yIG + t2*40);
 
-        vertices.put(x1).put(y1).put(1f).put(1f).put(1f).put(a).put(0f).put(0f);
-        vertices.put(x2).put(y2).put(1f).put(1f).put(1f).put(a).put(1f).put(1f);
-        vertices.put(x2).put(y1).put(1f).put(1f).put(1f).put(a).put(1f).put(0f);
+        vertices.put(x1).put(y1).put(r).put(g).put(b).put(a).put(s1).put(t1).put(xIG + s1*40).put(yIG + t1*40);
+        vertices.put(x2).put(y2).put(r).put(g).put(b).put(a).put(s2).put(t2).put(xIG + s2*40).put(yIG + t2*40);
+        vertices.put(x2).put(y1).put(r).put(g).put(b).put(a).put(s2).put(t1).put(xIG + s2*40).put(yIG + t1*40);
 
         numVertices += 6;
     }
@@ -278,6 +288,9 @@ public class Renderer {
         /* Specify Vertex Pointers */
         specifyVertexAttributes();
 
+        specifyTestAttributes();
+        
+        
         /* Set texture uniform */
         int uniTex = program.getUniformLocation("texImage");
         program.setUniform(uniTex, 0);
@@ -296,24 +309,35 @@ public class Renderer {
         Matrix4f projection = Matrix4f.orthographic(-width/2, width/2, -height/2, height/2, -1f, 1f);
         int uniProjection = program.getUniformLocation("projection");
         program.setUniform(uniProjection, projection);
+        
+        
+        
     }
     
     private static void specifyVertexAttributes() {
         /* Specify Vertex Pointer */
         int posAttrib = program.getAttributeLocation("position");
         program.enableVertexAttribute(posAttrib);
-        program.pointVertexAttribute(posAttrib, 2, 8 * Float.BYTES, 0);
+        program.pointVertexAttribute(posAttrib, 2, 10 * Float.BYTES, 0);
 
         /* Specify Color Pointer */
         int colAttrib = program.getAttributeLocation("color");
         program.enableVertexAttribute(colAttrib);
-        program.pointVertexAttribute(colAttrib, 4, 8 * Float.BYTES, 2 * Float.BYTES);
+        program.pointVertexAttribute(colAttrib, 4, 10 * Float.BYTES, 2 * Float.BYTES);
 
         /* Specify Texture Pointer */
         int texAttrib = program.getAttributeLocation("texcoord");
         program.enableVertexAttribute(texAttrib);
-        program.pointVertexAttribute(texAttrib, 2, 8 * Float.BYTES, 6 * Float.BYTES);
+        program.pointVertexAttribute(texAttrib, 2, 10 * Float.BYTES, 6 * Float.BYTES);
+        
+      
     }
     
-    
+    private static void specifyTestAttributes() {
+    	
+    	int posigAttrib = program.getAttributeLocation("posInGame");
+        program.enableVertexAttribute(posigAttrib);
+        program.pointVertexAttribute(posigAttrib, 2, 10 * Float.BYTES, 8 * Float.BYTES);
+    	
+    }
 }

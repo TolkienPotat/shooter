@@ -49,8 +49,16 @@ public class GameLoop {
 	
 
 	public void run() {
-		int fps = 60;
-		double timePerTick = 1000000000 / fps;
+		int fps = Initiate.fps;
+		double timePerTickf = 1000000000 / fps;
+		double deltaf = 0;
+		
+		
+		
+		
+		
+		int ups = 60;
+		double timePerTick = 1000000000 / ups;
 		double delta = 0;
 		long now;
 		long lastTime = System.nanoTime();
@@ -61,15 +69,23 @@ public class GameLoop {
 		initiate();
 		
 		while (!glfwWindowShouldClose(Initiate.window.id)) {
-		    
-			now = System.nanoTime();
+		    now = System.nanoTime();
+			
+			System.out.println(deltaf);
+			deltaf += (now - lastTime) / timePerTickf;
+			if (deltaf >=1) {
+				render();
+				deltaf --;
+			}
+			
+			
 			delta += (now - lastTime) / timePerTick;
 			timer += now - lastTime;
 			lastTime = now;
 			if (delta >= 1) {
 				input();
 				tick(shooting);
-				render();
+				
 				getSwitchStates();
 				
 				delta --;
