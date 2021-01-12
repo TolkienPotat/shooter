@@ -42,7 +42,7 @@ public class LobbyState implements State {
 
 		renderer.clear();
 		map.renderMap(player);
-		player.draw();
+		player.draw(player.xInGame, player.yInGame);
 		
 	}
 
