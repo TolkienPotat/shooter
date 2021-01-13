@@ -40,21 +40,21 @@ void main() {
 	
 	
 	vec4 baseLight = vec4(0.682, 0.737, 0.741, 1);
-	vec4 ambient = baseLight*0.75;
+	vec4 ambient = baseLight*0.6;
 	vec4 lighting = ambient;
 	
-	int lightSize = 2;
+	int lightSize = 4;
 	
-	vec2 lightPos[] = vec2[](vec2(0, 0), vec2(500, 500), vec2(10000, 10000));
+	vec2 lightPos[] = vec2[](vec2(100, 100), vec2(100, 500), vec2(10000, 10000), vec2(2000, 1000));
 	
 	
 	for (int i = 0; i < lightSize; ++i) {
 	
 	int disX = int(positiono.x - lightPos[i].x);
 	int disY = int(positiono.y - lightPos[i].y);
-	int distance = int(abs(disX) + abs(disY));
+	float distance = sqrt((disX^2) + (disY^2));
 	
-	lighting = lighting + normalizeTo(0, 1, (baseLight * (400 - distance)/distance));
+	lighting = lighting + normalizeTo(0, 1, (baseLight * (410 - distance)/400));
 	
 	}
 	
@@ -63,6 +63,6 @@ void main() {
     
      
     
-    fragColor = vec4(vertexColor, 1.0) * textureColor * lighting;
+    fragColor = vec4(vertexColor, 1.0) * textureColor * normalizeTo(0, 1.5, lighting);
 }
 
