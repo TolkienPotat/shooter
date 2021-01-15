@@ -17,6 +17,7 @@ public static GameLoop game;
 		
 		
 		window = new Window(640, 480);
+//		window = new Window(1920, 1080);
 		window.initialize(window.width, window.height);
 		game = new GameLoop();
 		game.run();
