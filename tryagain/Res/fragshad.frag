@@ -52,7 +52,7 @@ void main() {
 	
 	int disX = int(positiono.x - lightPos[i].x);
 	int disY = int(positiono.y - lightPos[i].y);
-	float distance = sqrt((disX^2) + (disY^2));
+	float distance = abs(disX) + abs(disY);
 	
 	lighting = lighting + normalizeTo(0, 1, (baseLight * (410 - distance)/400));
 	
