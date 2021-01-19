@@ -93,38 +93,36 @@ public class Window {
 	            	
 	            }
 	        	if (key == GLFW_KEY_W && action == GLFW_PRESS) {
-	            	GameLoop.moveYDirectionp = 1;
+	            	GameLoop.wDown = true;
 	            	//Initiate.game.shooting = true;
 	            	
 	            }
 	            if (key == GLFW_KEY_W && action == GLFW_RELEASE) {
-	            	GameLoop.moveYDirectionp = 0;
+	            	GameLoop.wDown = false;
 	            	//Initiate.game.shooting = false;
 	            }
 	            if (key == GLFW_KEY_S && action == GLFW_PRESS) {
-	            	GameLoop.moveYDirection = 2;
+	            	GameLoop.sDown = true;
 	            	
 	            }
 	            if (key == GLFW_KEY_S && action == GLFW_RELEASE) {
-	            	GameLoop.moveYDirection = 0;
+	            	GameLoop.sDown = false;
 	            	
 	            }
 	            if (key == GLFW_KEY_A && action == GLFW_PRESS) {
-	            	GameLoop.moveXDirection = 1;
-	            	
-	            	
+	            	GameLoop.aDown = true;
 	            	
 	            }
 	            if (key == GLFW_KEY_A && action == GLFW_RELEASE) {
-	            	GameLoop.moveXDirection = 0;
+	            	GameLoop.aDown = false;
 	            	
 	            }
 	            if (key == GLFW_KEY_D && action == GLFW_PRESS) {
-	            	GameLoop.moveXDirectionp = 2;
+	            	GameLoop.dDown = true;
 	            	
 	            }
 	            if (key == GLFW_KEY_D && action == GLFW_RELEASE) {
-	            	GameLoop.moveXDirectionp = 0;
+	            	GameLoop.dDown = false;
 	            	
 	            }
 	            
