@@ -22,13 +22,13 @@ public class GameLoop {
 	public String newState;
 	private String previousState;
 
-	public static int moveXDirection;
+	public static boolean wDown;
 
-	public static int moveYDirection;
+	public static boolean aDown;
 
-	public static int moveXDirectionp;
+	public static boolean sDown;
 
-	public static int moveYDirectionp;
+	public static boolean dDown;
 	
 	public boolean shooting;
 	
@@ -39,6 +39,10 @@ public class GameLoop {
 	
 	public int score;
 	
+	public int xVelocity = 0;
+	public int yVelocity = 0;
+	
+	private int speed = 6;
 	
 	public GameLoop() {
 		
@@ -120,8 +124,38 @@ public class GameLoop {
 
 	private void input() {
 
+		if (dDown) {
+			if (xVelocity < speed) {
+				xVelocity++;
+			}
+		} else if (xVelocity > 0) {
+			xVelocity--;
+		}
+		if (aDown) {
+			if (xVelocity > -speed) {
+				xVelocity--;
+			}
+		} else if (xVelocity < 0) {
+			xVelocity++;
+		}
+		
+		if (wDown) {
+			if (yVelocity < speed) {
+				yVelocity++;
+			}
+		} else if (yVelocity > 0) {
+			yVelocity--;
+		}
+		if (sDown) {
+			if (yVelocity > -speed) {
+				yVelocity--;
+			}
+		} else if (yVelocity < 0) {
+			yVelocity++;
+		}
+		
 		state.input();
-		state.input(moveXDirection, moveYDirection, moveXDirectionp, moveYDirectionp);
+		
 		
 	}
 

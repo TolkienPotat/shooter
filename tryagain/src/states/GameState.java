@@ -202,7 +202,7 @@ public class GameState implements State {
 		addSpawnPoint(19, 46);
 		addSpawnPoint(9, 36);
 		addSpawnPoint(0, 31);
-		addSpawnPoint(2, 28);
+		addSpawnPoint(1, 28);
 		addSpawnPoint(58, 8);
 		addSpawnPoint(31, 1);
 		addSpawnPoint(72, 18);
@@ -228,19 +228,11 @@ public class GameState implements State {
 		enemy.clear();
 	}
 
-	@Override
-	public void input(int moveXDirection, int moveYDirection, int moveXDirectionp, int moveYDirectionp) {
-
-		player.moveLeftRight(moveXDirection, map);
-		player.moveUpDown(moveYDirection, map);
-		player.moveLeftRight(moveXDirectionp, map);
-		player.moveUpDown(moveYDirectionp, map);
-
-	}
+	
 
 	@Override
 	public void input() {
-
+		player.move(Initiate.game.xVelocity, Initiate.game.yVelocity, map);
 	}
 
 	public Point getCursor(long windowID) {

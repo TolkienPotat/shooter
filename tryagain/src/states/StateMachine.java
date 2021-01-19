@@ -53,10 +53,7 @@ public class StateMachine implements State{
 		currentState.input();
 	}
 
-	@Override
-	public void input(int moveXDirection, int moveYDirection, int moveXDirectionp, int moveYDirectionp) {
-		currentState.input(moveXDirection, moveYDirection, moveXDirectionp, moveYDirectionp);
-	}
+	
 
 	
 	

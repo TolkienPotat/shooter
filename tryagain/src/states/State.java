@@ -12,7 +12,7 @@ public interface State {
 
 	public void input();
 
-	public void input(int moveXDirection, int moveYDirection, int moveXDirectionp, int moveYDirectionp);
+	
 
 	void tick(boolean shooting);
 	

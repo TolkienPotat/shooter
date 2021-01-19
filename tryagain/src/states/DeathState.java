@@ -53,12 +53,7 @@ public class DeathState  implements State{
 		
 	}
 
-	@Override
-	public void input(int moveXDirection, int moveYDirection, int moveXDirectionp, int moveYDirectionp) {
-
-		
-		
-	}
+	
 
 	@Override
 	public void tick(boolean shooting) {

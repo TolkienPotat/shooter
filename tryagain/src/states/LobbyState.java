@@ -65,17 +65,10 @@ public class LobbyState implements State {
 
 	@Override
 	public void input() {
-		
+		player.move(Initiate.game.xVelocity, Initiate.game.yVelocity, map);
 	}
 
-	@Override
-	public void input(int moveXDirection, int moveYDirection, int moveXDirectionp, int moveYDirectionp) {
-		
-		player.moveLeftRight(moveXDirection, map);
-		player.moveUpDown(moveYDirection, map);
-		player.moveLeftRight(moveXDirectionp, map);
-		player.moveUpDown(moveYDirectionp, map);
-		
-	}
+	
+	
 
 }
