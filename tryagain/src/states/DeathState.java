@@ -58,7 +58,7 @@ public class DeathState  implements State{
 	@Override
 	public void tick(boolean shooting) {
 		ticks++;
-		if (shooting && ticks > 180) {
+		if (shooting && !Initiate.game.leftMouseDownPrevious && ticks > 90) {
 			Initiate.game.newState = "Lobby";
 		}
 		
