@@ -40,12 +40,13 @@ void main() {
 	
 	
 	vec4 baseLight = vec4(0.682, 0.737, 0.741, 1);
-	vec4 ambient = baseLight*0.6;
+	vec4 ambient = baseLight*0.65;
 	vec4 lighting = ambient;
 	
-	int lightSize = 4;
+	int lightSize = 11;
 	
-	vec2 lightPos[] = vec2[](vec2(100, 100), vec2(100, 500), vec2(10000, 10000), vec2(2000, 1000));
+	vec3 lightPos[] = vec3[](vec3(320, 440, 400), vec3(10000, 10000, 500), vec3(2000, 1000, 400), vec3(3200, 600, 400), vec3(3960, 640, 400), vec3(3960, 200, 400)
+	, vec3(2640, 1000, 400), vec3(2200, 160, 400), vec3(1040, 120, 400), vec3(4000, 2000, 1000), vec3(520, 1880, 500));
 	
 	
 	for (int i = 0; i < lightSize; ++i) {
@@ -54,7 +55,7 @@ void main() {
 	int disY = int(positiono.y - lightPos[i].y);
 	float distance = abs(disX) + abs(disY);
 	
-	lighting = lighting + normalizeTo(0, 1, (baseLight * (410 - distance)/400));
+	lighting = lighting + normalizeTo(0, 1, (baseLight * (lightPos[i].z + 10 - distance)/lightPos[i].z));
 	
 	}
 	
