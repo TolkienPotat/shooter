@@ -36,6 +36,7 @@ public class GameLoop {
 	public boolean rightMouseDown;
 
 	public boolean rightMouseDownPrevious;
+	public boolean leftMouseDownPrevious;
 	
 	public int score;
 	
@@ -120,6 +121,7 @@ public class GameLoop {
 		
 		
 		rightMouseDownPrevious = rightMouseDown;
+		leftMouseDownPrevious = leftMouseDown;
 	}
 
 	private void input() {
