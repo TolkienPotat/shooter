@@ -10,6 +10,7 @@ import org.lwjgl.glfw.GLFW;
 
 import dev.create.Initiate;
 import dev.draw.Renderer;
+import dev.draw.Texture;
 import things.Bullet;
 import things.EnemyHandler;
 import things.Map;
@@ -39,9 +40,9 @@ public class GameState implements State {
 
 	private int ticksGoneNoEnemySummon = 0;
 	
+	private Texture heart;
 	
-	
-	NumberWriter scoreWriter;
+	NumberWriter numWriter;
 
 	ArrayList<Point> spawnSpaces = new ArrayList<Point>();
 
@@ -52,7 +53,8 @@ public class GameState implements State {
 		map = new Map("Res/map1.txt", 100, 50);
 		bullets = new ArrayList<Bullet>();
 		enemy = new EnemyHandler();
-		scoreWriter = new NumberWriter();
+		numWriter = new NumberWriter();
+		heart = Texture.loadTexture("Textures/Health.png");
 
 	}
 
@@ -76,9 +78,9 @@ public class GameState implements State {
 			boolean bulletDead = false;
 			bullets.get(i).move();
 
-			if (bullets.get(i).r.intersects(player.r) && bullets.get(i).owner == 1) {
+			if (bullets.get(i).r.intersects(player.r) && bullets.get(i).owner == 1 && player.health > 0) {
 				player.health -= bullets.get(i).damage;
-				System.out.println("Your health is now " + player.health);
+//				System.out.println("Your health is now " + player.health);
 				bullets.remove(i);
 				bulletDead = true;
 			}
@@ -154,7 +156,16 @@ public class GameState implements State {
 		enemy.render(renderer, player);
 		player.draw(player.xInGame, player.yInGame);
 		
-		scoreWriter.draw(220, 200, renderer, player.score);
+		
+		renderer.begin();
+		heart.bind();
+		renderer.drawTexture(heart, -224, 180, 10000, 10000);
+		renderer.end();
+		
+		
+		numWriter.draw(220, 200, renderer, player.score);
+		
+		numWriter.draw(-220, 200, renderer, player.health);
 		
 	}
 
