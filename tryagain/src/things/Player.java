@@ -83,6 +83,7 @@ public class Player extends Entity{
 		if (devMode) {
 			xInGame += xVelocity;
 			yInGame += yVelocity;
+			return;
 		}
 		
 		if (xVelocity == 0 && yVelocity == 0) {
@@ -100,10 +101,11 @@ public class Player extends Entity{
 
 		} else {
 			Initiate.game.yVelocity = 0;
+			r.y -= yVelocity;
 		}
-		} catch (ArrayIndexOutOfBoundsException e) {}
+		} catch (ArrayIndexOutOfBoundsException e) {r.y -= yVelocity;Initiate.game.yVelocity = 0;}
 		r.x += xVelocity;
-		r.y -= yVelocity;
+		
 		try {
 		if (!(map.tiles[Math.floorDiv((int) (r.getX() + r.getWidth()),40)][Math.floorDiv((int) (r.getY() + r.getHeight()), 40)].id == 3) 
 		&& !(map.tiles[Math.floorDiv((int) (r.getX()),40)][Math.floorDiv((int) (r.getY() + r.getHeight()), 40)].id == 3) 
@@ -117,110 +119,7 @@ public class Player extends Entity{
 		} catch (ArrayIndexOutOfBoundsException e) {Initiate.game.xVelocity = 0;}
 	}
 
-////	public void moveUpDown(int direction, Map map) {
-////		
-////		updateRect();
-////		
-////		
-////		
-////		if (direction == 0) {
-////			return;
-////		} else if (direction == 1) {
-////			
-////			if (devMode) {
-////				yInGame += speed;
-////				return;
-////			}
-////			
-////			if (yInGame < map.width * 40 - texture.getHeight()) {
-////				r.height +=speed;
-////				try {
-////					if (((r.intersects(map.tiles[Math.floorDiv((int) (r.getX() + r.getWidth()), 40)][Math.floorDiv((int) (r.getY() + r.getHeight()), 40)].r) && (map.tiles[Math.floorDiv((int) (r.getX() + r.getWidth()), 40)][Math.floorDiv((int) (r.getY() + r.getHeight()), 40)].id == 3))) || ((r.intersects(map.tiles[Math.floorDiv((int) (r.getX()), 40)][Math.floorDiv((int) (r.getY() + r.getHeight()), 40)].r) && (map.tiles[Math.floorDiv((int) (r.getX()), 40)][Math.floorDiv((int) (r.getY() + r.getHeight()), 40)].id == 3)))) {
-////					
-////						return;
-////					
-////					}
-////				} catch (java.lang.ArrayIndexOutOfBoundsException e) {
-////					return;
-////				}
-////				yInGame += speed;
-////			}
-////			
-////		} else  if (direction == 2) {
-////			if (devMode) {
-////				yInGame -= speed;
-////				return;
-////			}
-////			
-////			if (yInGame > 0) {
-////				r.y -=speed;
-////				try {
-////					if ((r.intersects(map.tiles[Math.floorDiv((int) (r.getX()), 40)][Math.floorDiv((int) (r.getY()), 40)].r) && (map.tiles[Math.floorDiv((int) (r.getX()), 40)][Math.floorDiv((int) (r.getY()), 40)].id == 3)  || ((r.intersects(map.tiles[Math.floorDiv((int) (r.getX() + r.getWidth()), 40)][Math.floorDiv((int) (r.getY()), 40)].r) && (map.tiles[Math.floorDiv((int) (r.getX() + r.getWidth()), 40)][Math.floorDiv((int) (r.getY()), 40)].id == 3))))) {
-////					
-////						return;
-////					
-////					}
-////				} catch (java.lang.ArrayIndexOutOfBoundsException e) {
-////					return;
-////				}
-////				yInGame -= speed;
-////				
-////			}
-////			
-////			
-////		} 
-////		
-////	}
-////	
-////	public void moveLeftRight(int direction, Map map) {
-//		
-//		updateRect();
-//
-//		if (direction == 0) {
-//			return;
-//		} else if (direction == 1) {
-//			if (devMode) {
-//				xInGame -= speed;
-//				return;
-//			}
-//			if (xInGame > 0) {
-//				r.x -=speed;
-//				
-//				try {
-//					if ((r.intersects(map.tiles[Math.floorDiv((int) (r.getX()), 40)][Math.floorDiv((int) (r.getY()), 40)].r) && (map.tiles[Math.floorDiv((int) (r.getX()), 40)][Math.floorDiv((int) (r.getY()), 40)].id == 3)) || (r.intersects(map.tiles[Math.floorDiv((int) (r.getX()), 40)][Math.floorDiv((int) (r.getY() + r.getHeight()), 40)].r) && (map.tiles[Math.floorDiv((int) (r.getX() ), 40)][Math.floorDiv((int) (r.getY() + r.getHeight()), 40)].id == 3))) {
-//					
-//						return;
-//					
-//					}
-//				} catch (java.lang.ArrayIndexOutOfBoundsException e) {
-//					return;
-//				}
-//				xInGame -= speed;
-//			}
-//			
-//		} else  if (direction == 2) {
-//			if (devMode) {
-//				xInGame += speed;
-//				return;
-//			}
-//			if (xInGame < map.length * 40 - texture.getWidth()) {
-//				r.x +=speed;
-//				
-//				try {
-//				if (((r.intersects(map.tiles[Math.floorDiv((int) (r.getX() + r.getWidth()), 40)][Math.floorDiv((int) (r.getY() + r.getHeight()), 40)].r) && (map.tiles[Math.floorDiv((int) (r.getX() + r.getWidth()), 40)][Math.floorDiv((int) (r.getY() + r.getHeight()), 40)].id == 3))) || ((r.intersects(map.tiles[Math.floorDiv((int) (r.getX() + r.getWidth()), 40)][Math.floorDiv((int) (r.getY()), 40)].r) && (map.tiles[Math.floorDiv((int) (r.getX() + r.getWidth()), 40)][Math.floorDiv((int) (r.getY()), 40)].id == 3)))) {
-//					
-//					return;
-//					
-//				}
-//				} catch (java.lang.ArrayIndexOutOfBoundsException e) {
-//					return;
-//				}
-//				xInGame += speed;
-//			}
-//			
-//		} 
-//		
-//	}
+
 	
 	public void updateRect() {
 		
@@ -263,7 +162,7 @@ public class Player extends Entity{
 		//shotgun
 		guns.add(new Gun(2, 15, 15, 10, "Shotgun", 1));
 		
-		guns.add(new Gun(1, 1, 1, 35, "Sniper", 10));
+
 		
 	}
 	
