@@ -30,7 +30,7 @@ public class LobbyState implements State {
 	public void tick(boolean shooting) {
 
 		player.updateRect();
-		
+		player.tick();
 		if (player.r.intersects(map.tiles[7][11].r) || player.r.intersects(map.tiles[8][11].r)) {
 			Initiate.game.newState = "Game";
 		}
