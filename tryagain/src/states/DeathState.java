@@ -37,6 +37,10 @@ public class DeathState  implements State{
 		
 		score = Initiate.game.score;
 		
+		Initiate.game.writeHighScore();
+		
+		System.out.println("Highscore is " + Initiate.game.highScore);
+		
 		scoreWriter = new NumberWriter();
 		
 		background = Texture.loadTexture("Textures/death.png");

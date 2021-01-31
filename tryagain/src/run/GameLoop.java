@@ -40,10 +40,14 @@ public class GameLoop {
 	
 	public int score;
 	
+	public int highScore;
+	
 	public int xVelocity = 0;
 	public int yVelocity = 0;
 	
 	private int speed = 6;
+	
+	public FileReadWrite fileReadWriter = new FileReadWrite("Res/score.jafn");
 	
 	public GameLoop() {
 		
@@ -171,6 +175,8 @@ public class GameLoop {
 		state.change("Loading");
 		newState = "Loading";
 		previousState = "Loading";
+		
+		highScore = getHighScore();
 
 	}
 	
@@ -181,6 +187,17 @@ public class GameLoop {
 			previousState = newState;
 		}
 		
+	}
+	
+	public int getHighScore() {
+		return (fileReadWriter.readScore());
+	}
+	
+	public void writeHighScore() {
+		if (score > highScore) { 
+			fileReadWriter.writeScore("score=" + String.valueOf(score));
+			highScore = score;
+		}
 	}
 	
 	
