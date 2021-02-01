@@ -11,8 +11,8 @@ public class Player extends Entity{
 	public int xInGame, yInGame;
 	
 	
-	//walls don't stop you and enemies don't kill you if this is enabled
-	public boolean devMode = false;
+	
+	public boolean devMode;
 	
 	//position bullets are fired from
 	public Point guntipPos;
@@ -38,6 +38,8 @@ public class Player extends Entity{
 		
 		x = 0;
 		y = 0;
+		
+		devMode = Initiate.game.devMode;
 		
 		xInGame = 10;
 		yInGame = 10;
@@ -156,8 +158,8 @@ public class Player extends Entity{
 	
 	public void addGuns() {
 		
-		//fast, straight
-		guns.add(new Gun(20, 1, 5, 13, "Auto-Rifle", 1));
+		//fast, straight, 13vel
+		guns.add(new Gun(20, 1, 5, 11, "Rifle", 1));
 		
 		//shotgun
 		guns.add(new Gun(2, 15, 15, 10, "Shotgun", 1));
