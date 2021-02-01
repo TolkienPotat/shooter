@@ -47,11 +47,13 @@ public class GameLoop {
 	
 	private int speed = 6;
 	
-	public FileReadWrite fileReadWriter = new FileReadWrite("Res/score.jafn");
+	public boolean devMode = false;
+	
+	public FileReadWrite fileReadWriter;
 	
 	public GameLoop() {
 		
-		
+		fileReadWriter = new FileReadWrite("Res/score.jafn");	
 		
 	}
 	
