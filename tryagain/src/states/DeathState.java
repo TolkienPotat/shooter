@@ -16,6 +16,8 @@ public class DeathState  implements State{
 	
 	int score;
 	
+	int high;
+	
 	@Override
 	public void render() {
 		
@@ -26,6 +28,7 @@ public class DeathState  implements State{
 		background.bind();
 		r.end();
 		scoreWriter.draw(-65, -31, r, score);
+		scoreWriter.draw(-65, -51, r, high);
 		
 	}
 
@@ -37,9 +40,14 @@ public class DeathState  implements State{
 		
 		score = Initiate.game.score;
 		
-		Initiate.game.writeHighScore();
+		if (!Initiate.game.devMode) {
+			Initiate.game.writeHighScore();
+			high = Initiate.game.highScore;
+		} else {
+			high = 0;
+		}
 		
-		System.out.println("Highscore is " + Initiate.game.highScore);
+		
 		
 		scoreWriter = new NumberWriter();
 		
