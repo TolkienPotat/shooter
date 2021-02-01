@@ -128,7 +128,7 @@ public class Font {
     public Font(java.awt.Font font, boolean antiAlias) {
         glyphs = new HashMap<>();
         texture = createFontTexture(font, antiAlias);
-        System.out.println(texture.getHeight());
+        
     }
 
     /**
@@ -351,11 +351,11 @@ public class Font {
         if (textHeight > fontHeight) {
             drawY += textHeight - fontHeight;
         }
-
-        System.out.println(texture.getWidth());
+        
+        
         
         texture.bind();
-        renderer.begin();
+        
         
         for (int i = 0; i < text.length(); i++) {
             char ch = text.charAt(i);
@@ -370,10 +370,12 @@ public class Font {
                 continue;
             }
             Glyph g = glyphs.get(ch);
+            renderer.begin();
             renderer.drawTextureRegion(texture, drawX, drawY, g.x, g.y, g.width, g.height, c, 10000, 10000);
+            renderer.end();
             drawX += g.width;
         }
-        renderer.end();
+        
     }
 
     /**

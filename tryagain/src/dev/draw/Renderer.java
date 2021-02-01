@@ -55,7 +55,7 @@ public class Renderer {
         
         
         try {
-            font = new Font(new FileInputStream("Res/OpenSans-Regular.ttf"), 16);
+            font = new Font(new FileInputStream("Res/Pixel1.ttf"), 16);
         } catch (FontFormatException | IOException ex) {
             Logger.getLogger(Renderer.class.getName()).log(Level.CONFIG, null, ex);
             font = new Font();
