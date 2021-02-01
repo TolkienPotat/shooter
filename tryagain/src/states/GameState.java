@@ -1,5 +1,6 @@
 package states;
 
+import java.awt.Color;
 import java.awt.Point;
 import java.nio.DoubleBuffer;
 import java.util.ArrayList;
@@ -45,6 +46,8 @@ public class GameState implements State {
 	NumberWriter numWriter;
 
 	ArrayList<Point> spawnSpaces = new ArrayList<Point>();
+	
+	
 
 	public GameState() {
 
@@ -156,6 +159,7 @@ public class GameState implements State {
 		enemy.render(renderer, player);
 		player.draw(player.xInGame, player.yInGame);
 		
+		renderer.drawText(player.currentGun.name.toUpperCase(), -315, -235, new Color(1, 1, 1));
 		
 		renderer.begin();
 		heart.bind();
