@@ -1,3 +1,3 @@
-# shooter
+# Shooter Game Initiate
 
-a game I am making
+A game made using LWJGL and openGL. The goal is simple: Shoot the enemies.
