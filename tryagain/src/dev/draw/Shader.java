@@ -59,7 +59,7 @@ public class Shader {
 	 public static Shader loadShader(int type, String path) {
 	        StringBuilder builder = new StringBuilder();
 
-	        try (InputStream in = new FileInputStream(path);
+	        try (InputStream in = Shader.class.getResourceAsStream(path);
 	             BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
 	            String line;
 	            while ((line = reader.readLine()) != null) {

@@ -134,7 +134,7 @@ public class Player extends Entity{
 	}
 	
 	public void init(Map map) {
-		createTexture("Textures/character.png");
+		createTexture("/character.png");
 		xInGame = (map.length * 40) / 2 + (random.nextInt(spawnDistance *2) - spawnDistance);
 		yInGame = map.width * 40 / 2 + (random.nextInt(spawnDistance*2) - spawnDistance);
 		health = 50;

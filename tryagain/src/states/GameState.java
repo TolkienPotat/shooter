@@ -53,11 +53,11 @@ public class GameState implements State {
 
 		renderer = new Renderer();
 		player = new Player();
-		map = new Map("Res/map1.txt", 100, 50);
+		map = new Map("/map1.txt", 100, 50);
 		bullets = new ArrayList<Bullet>();
 		enemy = new EnemyHandler();
 		numWriter = new NumberWriter();
-		heart = Texture.loadTexture("Textures/Health.png");
+		heart = Texture.loadTexture("/Health.png");
 
 	}
 
@@ -159,17 +159,18 @@ public class GameState implements State {
 		enemy.render(renderer, player);
 		player.draw(player.xInGame, player.yInGame);
 		
-		renderer.drawText(player.currentGun.name.toUpperCase(), -315, -235, new Color(1, 1, 1));
+		renderer.drawText(player.currentGun.name.toUpperCase(), -315, -235, Color.white);
+		
 		
 		renderer.begin();
 		heart.bind();
 		renderer.drawTexture(heart, -224, 180, 10000, 10000);
 		renderer.end();
-		
+		renderer.drawText(String.valueOf(player.health).toUpperCase(), -214, 200);
 		
 		numWriter.draw(220, 200, renderer, player.score);
 		
-		numWriter.draw(-220, 200, renderer, player.health);
+//		numWriter.draw(-220, 200, renderer, player.health);
 		
 	}
 

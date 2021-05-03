@@ -25,7 +25,7 @@ public class AudioMaster {
 	private static long device;
 	private static ALCCapabilities alcCapabilities;
 	private static long context;
-	@SuppressWarnings("unused")
+	
 	private static ALCapabilities alCapabilities;
 	
 	private static List<Integer> buffers = new ArrayList<Integer>();

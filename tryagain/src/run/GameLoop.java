@@ -53,7 +53,7 @@ public class GameLoop {
 	
 	public GameLoop() {
 		
-		fileReadWriter = new FileReadWrite("Res/score.jafn");	
+		fileReadWriter = new FileReadWrite("/score.jafn", System.getProperty("user.home") + "/.shooterGame");	
 		
 	}
 	
@@ -80,15 +80,16 @@ public class GameLoop {
 			delta += (now - lastTime) / timePerTick;
 			timer += now - lastTime;
 			lastTime = now;
+			
 			if (delta >= 1) {
 				input();
 				tick(shooting);
-				render();
-				getSwitchStates();
-				
+				getSwitchStates();		
 				delta --;
 			}
+			render();
 			
+
 			if (timer >= 1000000000) {
 				
 				

@@ -22,7 +22,7 @@ public class LobbyState implements State {
 		
 		renderer = new Renderer();
 		player = new Player();
-		map = new Map("Res/lobby.txt", 16, 12);
+		map = new Map("/lobby.txt", 16, 12);
 		
 	}
 
@@ -51,7 +51,7 @@ public class LobbyState implements State {
 
 		renderer.init();
 		
-		player.createTexture("Textures/character.png");
+		player.createTexture("/character.png");
 		player.xInGame = (map.length * 40) / 2 + (random.nextInt(160) - 80);
 		player.yInGame = map.width * 40 / 2 + (random.nextInt(160) - 80);
 

@@ -1,8 +1,12 @@
 package dev.draw;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import org.lwjgl.system.MemoryStack;
+
+
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.GL_CLAMP_TO_BORDER;
@@ -164,10 +168,28 @@ public class Texture {
             IntBuffer w = stack.mallocInt(1);
             IntBuffer h = stack.mallocInt(1);
             IntBuffer comp = stack.mallocInt(1);
-
+           
+            InputStream in = Texture.class.getResourceAsStream(path);
+            byte[] bytes;
+            ByteBuffer b;
+            
+			try {
+				bytes = in.readAllBytes();
+				b = ByteBuffer.allocateDirect(bytes.length);
+				b.put(bytes);
+				b.flip();
+			} catch (IOException e) {
+				e.printStackTrace();
+				throw new RuntimeException();
+			}
+			
+           
             /* Load image */
             stbi_set_flip_vertically_on_load(true);
-            image = stbi_load(path, w, h, comp, 4);
+
+            image = stbi_load_from_memory(b, w, h, comp, 4);
+            
+            
             if (image == null) {
                 throw new RuntimeException("Failed to load a texture file!"
                                            + System.lineSeparator() + stbi_failure_reason());

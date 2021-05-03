@@ -37,7 +37,7 @@ public class Enemy extends Entity {
 
 	public Enemy() {
 
-		createTexture("Textures/enemy.png");
+		createTexture("/enemy.png");
 
 		health = 10;
 		line = new Line2D.Float();

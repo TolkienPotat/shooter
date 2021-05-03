@@ -27,7 +27,7 @@ public class LoadingState implements State{
 	public void init() {
 		ticks = 0;
 		r.init();
-		black = Texture.loadTexture("Textures/loading.png");
+		black = Texture.loadTexture("/loading.png");
 		
 	}
 

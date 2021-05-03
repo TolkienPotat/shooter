@@ -8,7 +8,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Random;
 
 public class FileReadWrite {
 
@@ -21,9 +20,29 @@ public class FileReadWrite {
 	File f;
 	
 	
-	public FileReadWrite(String filePath) {
-		f = new File(filePath);
-		fPath = filePath;
+	public FileReadWrite(String filePath, String directory) {
+		
+		
+		File filedir = new File(directory);
+		if (!filedir.exists()) {
+			if (filedir.mkdirs()) {
+				System.out.println("Filepath to game files not found, creating one");
+			}
+		}
+		f = new File(directory + filePath);
+		fPath = directory + filePath;
+
+		
+		try {
+			if (f.createNewFile()) {
+				System.out.println("File Created");
+			}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
 		try {
 			reader = new FileReader(f);
 		} catch (FileNotFoundException e) {
@@ -47,8 +66,10 @@ public class FileReadWrite {
 			pw.close();
 			bufferedWriter.write(s);
 			bufferedWriter.close();
+			System.out.println("Score saved");
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("Error, score not saved");
 		}
 		
 		
@@ -74,13 +95,5 @@ public class FileReadWrite {
 		
 	}
 
-	public static void main(String[] args) {
-		Random r = new Random();
-		FileReadWrite frw = new FileReadWrite("Res/score.jafn");
-		frw.readScore();
-		frw.writeScore("score=" + r.nextInt(36));
-		frw.readScore();
-		
-	}
-
+	
 }

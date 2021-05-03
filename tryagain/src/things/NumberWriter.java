@@ -13,7 +13,7 @@ public class NumberWriter {
 		numbers = new Texture[10];
 
 		for (int i = 0; i < 10; i++) {
-			numbers[i] = Texture.loadTexture("Textures/Characters/" + i + ".png");
+			numbers[i] = Texture.loadTexture("/Characters/" + i + ".png");
 
 		}
 		textureWidth = numbers[0].getWidth();

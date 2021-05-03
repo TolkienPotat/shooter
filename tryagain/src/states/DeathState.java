@@ -51,7 +51,7 @@ public class DeathState  implements State{
 		
 		scoreWriter = new NumberWriter();
 		
-		background = Texture.loadTexture("Textures/death.png");
+		background = Texture.loadTexture("/death.png");
 		
 	}
 

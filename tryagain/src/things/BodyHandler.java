@@ -18,14 +18,14 @@ public class BodyHandler {
 	}
 
 	private void addTextures() {
-		textures.add(Texture.loadTexture("Textures/enemyDeath/1.png"));
-		textures.add(Texture.loadTexture("Textures/enemyDeath/2.png"));
-		textures.add(Texture.loadTexture("Textures/enemyDeath/3.png"));
-		textures.add(Texture.loadTexture("Textures/enemyDeath/4.png"));
-		textures.add(Texture.loadTexture("Textures/enemyDeath/5.png"));
-		textures.add(Texture.loadTexture("Textures/enemyDeath/6.png"));
-		textures.add(Texture.loadTexture("Textures/enemyDeath/7.png"));
-		textures.add(Texture.loadTexture("Textures/enemyDeath/8.png"));
+		textures.add(Texture.loadTexture("/enemyDeath/1.png"));
+		textures.add(Texture.loadTexture("/enemyDeath/2.png"));
+		textures.add(Texture.loadTexture("/enemyDeath/3.png"));
+		textures.add(Texture.loadTexture("/enemyDeath/4.png"));
+		textures.add(Texture.loadTexture("/enemyDeath/5.png"));
+		textures.add(Texture.loadTexture("/enemyDeath/6.png"));
+		textures.add(Texture.loadTexture("/enemyDeath/7.png"));
+		textures.add(Texture.loadTexture("/enemyDeath/8.png"));
 	}
 
 	public void tick() {

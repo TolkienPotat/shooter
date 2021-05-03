@@ -17,7 +17,6 @@ import static org.lwjgl.opengl.GL20.GL_VERTEX_SHADER;
 
 import java.awt.Color;
 import java.awt.FontFormatException;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -55,7 +54,7 @@ public class Renderer {
         
         
         try {
-            font = new Font(new FileInputStream("Res/Pixel1.ttf"), 16);
+            font = new Font(Renderer.class.getResourceAsStream("/Pixel1.ttf"), 16);
         } catch (FontFormatException | IOException ex) {
             Logger.getLogger(Renderer.class.getName()).log(Level.CONFIG, null, ex);
             font = new Font();
@@ -253,11 +252,11 @@ public class Renderer {
         /* Load shaders */
         Shader vertexShader, fragmentShader;
         if (GameLoop.isDefaultContext) {
-            vertexShader = Shader.loadShader(GL_VERTEX_SHADER, "Res/vertexshader.vert");
-            fragmentShader = Shader.loadShader(GL_FRAGMENT_SHADER, "Res/fragshad.frag");
+            vertexShader = Shader.loadShader(GL_VERTEX_SHADER, "/vertexshader.vert");
+            fragmentShader = Shader.loadShader(GL_FRAGMENT_SHADER, "/fragshad.frag");
         } else {
-            vertexShader = Shader.loadShader(GL_VERTEX_SHADER, "Res/vertexshader.vert");
-            fragmentShader = Shader.loadShader(GL_FRAGMENT_SHADER, "Res/fragshad.frag");
+            vertexShader = Shader.loadShader(GL_VERTEX_SHADER, "/vertexshader.vert");
+            fragmentShader = Shader.loadShader(GL_FRAGMENT_SHADER, "/fragshad.frag");
         }
 
         /* Create shader program */

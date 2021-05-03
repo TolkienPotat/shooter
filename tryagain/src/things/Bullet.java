@@ -34,7 +34,7 @@ public class Bullet {
 	public Bullet(float angle, Renderer renderer, int owner, int xInGame, int yInGame, int velocity, int damage) {
 		
 		texture = new Texture();
-		texture = Texture.loadTexture("Textures/bullet2.png");
+		texture = Texture.loadTexture("/bullet2.png");
 		
 		this.renderer = renderer;
 		
